@@ -1,11 +1,9 @@
-package pebble.staticrev;
-
-import pebble.util.RevManifestFileParser;
+package pebble.asset.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AssetConfig {
+public class AssetConfig implements RevAssetPathResolver {
 
     private final String basePath;
     private final Map<String, String> assetRevMap;
@@ -18,11 +16,7 @@ public class AssetConfig {
     public AssetConfig(String assetsHost, String basePath, Map<String, String> revMap) {
         this.assetsHost = (assetsHost != null ? assetsHost : "");
         this.basePath = basePath;
-        this.assetRevMap = revMap;
-    }
-
-    public AssetConfig(String basePath, String manifestFile) {
-        this(basePath, RevManifestFileParser.parse(manifestFile));
+        this.assetRevMap = (revMap != null ? revMap : new HashMap<>());
     }
 
     public AssetConfig(String basePath) {
@@ -39,5 +33,17 @@ public class AssetConfig {
 
     public String getAssetsHost() {
         return assetsHost;
+    }
+
+    public String resolvePath(String assetName) {
+        String path = path(assetName);
+        return this.getAssetsHost() + "/" + this.getAssetRevMap().getOrDefault(path, path);
+    }
+
+    private String path(String resource) {
+        if (this.getBasePath() == null || this.getBasePath().equals("")) {
+            return resource;
+        }
+        return this.getBasePath() + "/" + resource;
     }
 }

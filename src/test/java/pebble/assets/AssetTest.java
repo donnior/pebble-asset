@@ -4,7 +4,7 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.loader.StringLoader;
 import org.junit.Test;
-import pebble.staticrev.PebbleAssetExtensionBuilder;
+import pebble.asset.PebbleAssetExtensionBuilder;
 
 import java.io.IOException;
 import java.io.StringWriter;

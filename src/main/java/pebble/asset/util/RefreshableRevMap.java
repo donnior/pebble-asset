@@ -1,4 +1,4 @@
-package pebble.util;
+package pebble.asset.util;
 
 import java.io.File;
 import java.util.Collection;
@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class RevMap implements Map {
+public class RefreshableRevMap implements Map {
 
     private final File file;
     private long lastModified;
     private Map inner = new HashMap<>();
 
-    public RevMap(File reveFile) {
+    public RefreshableRevMap(File reveFile) {
         this.file = reveFile;
-        this.inner = RevManifestFileParser.parse(this.file);
+        this.inner = JsonToMapParser.parse(this.file);
         this.lastModified = this.file.lastModified();
     }
 
@@ -47,7 +47,7 @@ public class RevMap implements Map {
     private synchronized void checkAndRefresh() {
         if (this.file.lastModified() > this.lastModified) {
             this.lastModified = this.file.lastModified();
-            this.inner = RevManifestFileParser.parse(this.file);
+            this.inner = JsonToMapParser.parse(this.file);
         }
     }
 

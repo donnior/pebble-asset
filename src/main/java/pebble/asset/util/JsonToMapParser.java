@@ -1,4 +1,4 @@
-package pebble.util;
+package pebble.asset.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RevManifestFileParser {
+public class JsonToMapParser {
 
     public static Map<String, String> parse(String filePath) {
         return parse(new File(filePath));

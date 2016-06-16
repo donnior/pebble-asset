@@ -1,4 +1,4 @@
-package pebble.ext;
+package pebble.asset.func;
 
 import com.mitchellbosecke.pebble.error.ParserException;
 import com.mitchellbosecke.pebble.error.PebbleException;

@@ -1,6 +1,7 @@
-package pebble.staticrev;
+package pebble.asset;
 
-import pebble.util.RevMap;
+import pebble.asset.impl.AssetConfig;
+import pebble.asset.util.RefreshableRevMap;
 
 import java.io.File;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class PebbleAssetExtensionBuilder {
             File file = new File(this.revFile);
 
             if (file.exists() && file.isFile()) {
-                Map refreshableRevMap = new RevMap(new File(this.revFile));
+                Map refreshableRevMap = new RefreshableRevMap(new File(this.revFile));
                 return new PebbleAssetExtension(new AssetConfig(this.assetsHost, this.base, refreshableRevMap));
             }
 

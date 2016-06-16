@@ -1,4 +1,4 @@
-package pebble.ext;
+package pebble.asset.func;
 
 import com.mitchellbosecke.pebble.error.ParserException;
 import com.mitchellbosecke.pebble.error.PebbleException;
@@ -11,10 +11,10 @@ import com.mitchellbosecke.pebble.node.expression.MapExpression;
 import com.mitchellbosecke.pebble.parser.Parser;
 import com.mitchellbosecke.pebble.tokenParser.AbstractTokenParser;
 
-public class CSSTagInclude extends AbstractTokenParser {
+public class ImageTagInclude extends AbstractTokenParser {
     @Override
     public String getTag() {
-        return "cssInclude";
+        return "imageInclude";
     }
 
     @Override
@@ -39,6 +39,6 @@ public class CSSTagInclude extends AbstractTokenParser {
             e.printStackTrace();
         }
 
-        return new TextNode("<link href=\"" + value  +"\" rel=\"stylesheet\"/>", lineNumber);
+        return new TextNode("<img src=\"" + value  +"\" />", lineNumber);
     }
 }
