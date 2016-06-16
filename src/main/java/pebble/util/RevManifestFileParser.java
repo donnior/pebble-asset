@@ -18,7 +18,16 @@ public class RevManifestFileParser {
     public static Map<String, String> parse(File file) {
         try {
             String content = Files.toString(file, Charset.forName("UTF-8"));
-            return new ObjectMapper().readValue(content, Map.class);
+            return fromContent(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+    public static Map<String, String> fromContent(String jsonContent){
+        try {
+            return new ObjectMapper().readValue(jsonContent, Map.class);
         } catch (IOException e) {
             e.printStackTrace();
             return new HashMap<>();

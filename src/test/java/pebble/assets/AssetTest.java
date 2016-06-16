@@ -17,52 +17,74 @@ public class AssetTest {
 
     @Test
     public void testMappedAsset() throws PebbleException, IOException {
-        String template = "<script src=\"{{requireAsset('a.js')}}\"></script>";
+        String template = "<script src=\"{{requireAsset('js/a.js')}}\"></script>";
 
-        PebbleEngine engine = engine("http://assets.example.com");
-        StringWriter writer = new StringWriter();
-        engine.getTemplate(template).evaluate(writer);
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"http://assets.example.com/assets/js/a.1122.js\"></script>");
 
-        assertEquals(writer.toString(),
-                "<script src=\"http://assets.example.com/assets/a.1122.js\"></script>");
+        engine = engine("http://assets.example.com", null);
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"http://assets.example.com/js/a.1122.js\"></script>");
+
+        engine = engine(null, null);
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"/js/a.1122.js\"></script>");
+
+        engine = engine(null, "assets");
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"/assets/js/a.1122.js\"></script>");
+
     }
 
     @Test
     public void testUnMappedAsset() throws PebbleException, IOException {
         String template = "<script src=\"{{requireAsset('b.js')}}\"></script>";
 
-        PebbleEngine engine = engine("http://assets.example.com");
-        StringWriter writer = new StringWriter();
-        engine.getTemplate(template).evaluate(writer);
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"http://assets.example.com/assets/b.js\"></script>");
 
-        assertEquals(writer.toString(),
-                "<script src=\"http://assets.example.com/assets/b.js\"></script>");
+        engine = engine("http://assets.example.com", null);
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"http://assets.example.com/b.js\"></script>");
+
+        engine = engine(null, null);
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"/b.js\"></script>");
+
+        engine = engine(null, "assets");
+        result = evaluate(template, engine);
+        assertEquals(result,  "<script src=\"/assets/b.js\"></script>");
     }
 
-    @Test
-    public void testMappedWithoutHostAsset() throws PebbleException, IOException {
-        String template = "<script src=\"{{requireAsset('a.js')}}\"></script>";
 
-        PebbleEngine engine = engine(null);
+    private String evaluate(String template, PebbleEngine engine) throws PebbleException, IOException {
         StringWriter writer = new StringWriter();
         engine.getTemplate(template).evaluate(writer);
-
-        assertEquals(writer.toString(),
-                "<script src=\"/assets/a.1122.js\"></script>");
+        return writer.toString();
     }
 
-    private PebbleEngine engine(String host) {
+    private PebbleEngine engine(String host){
+        return engine(host, null);
+    }
+
+    private PebbleEngine engine(String host, String base) {
         PebbleEngine.Builder builder = new PebbleEngine.Builder();
 
         PebbleAssetExtensionBuilder extensionBuilder =
                 new PebbleAssetExtensionBuilder();
 
         Map map = new HashMap<>();
-        map.put("assets/a.js", "assets/a.1122.js");
+        if (base != null){
+            map.put(base + "/js/a.js", base+"/js/a.1122.js");
+        } else {
+            map.put("js/a.js", "js/a.1122.js");
+        }
 
         builder.extension(
                 extensionBuilder.assetsHost(host)
-                        .basePath("assets")
+                        .basePath(base)
                         .revMap(map).build()
         ).loader(new StringLoader());
 

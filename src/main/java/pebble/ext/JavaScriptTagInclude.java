@@ -38,7 +38,7 @@ public class JavaScriptTagInclude extends AbstractTokenParser {
             e.printStackTrace();
         }
 
-        return new TextNode("<script src='" + value  +"'></script>", lineNumber);
+        return new TextNode("<script src=\"" + value  +"\"></script>", lineNumber);
     }
 
 
