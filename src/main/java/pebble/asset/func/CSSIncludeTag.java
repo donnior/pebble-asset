@@ -10,11 +10,21 @@ import com.mitchellbosecke.pebble.node.expression.Expression;
 import com.mitchellbosecke.pebble.node.expression.MapExpression;
 import com.mitchellbosecke.pebble.parser.Parser;
 import com.mitchellbosecke.pebble.tokenParser.AbstractTokenParser;
+import pebble.asset.impl.RevAssetPathResolver;
 
-public class ImageTagInclude extends AbstractTokenParser {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class CSSIncludeTag extends AbstractAssetTag {
+
+    public CSSIncludeTag(RevAssetPathResolver resolver) {
+        super(resolver);
+    }
+
     @Override
     public String getTag() {
-        return "imageInclude";
+        return "cssInclude";
     }
 
     @Override
@@ -25,20 +35,26 @@ public class ImageTagInclude extends AbstractTokenParser {
         stream.next();
 
         Expression<?> expression = parser.getExpressionParser().parseExpression();
-//        stream.next();
 
         Token current = stream.current();
         MapExpression mapExpression = null;
 
         stream.expect(Token.Type.EXECUTE_END);
 
-        String value = null;
+        Object value = null;
         try {
-            value = expression.evaluate(null, null).toString();
+            value = expression.evaluate(null, null);
+            return nodeForValues(value, lineNumber);
         } catch (PebbleException e) {
             e.printStackTrace();
         }
 
-        return new TextNode("<img src=\"" + value  +"\" />", lineNumber);
+        return new TextNode("", lineNumber);
+    }
+
+
+    @Override
+    TextNode singleTextNodeForAsset(String assetPath, int lineNumber) {
+        return new TextNode("<link href=\"" + assetPath  +"\" rel=\"stylesheet\"/>", lineNumber);
     }
 }

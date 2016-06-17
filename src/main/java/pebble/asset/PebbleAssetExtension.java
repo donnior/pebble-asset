@@ -3,9 +3,9 @@ package pebble.asset;
 import com.mitchellbosecke.pebble.extension.AbstractExtension;
 import com.mitchellbosecke.pebble.extension.Function;
 import com.mitchellbosecke.pebble.tokenParser.TokenParser;
-import pebble.asset.func.CSSTagInclude;
-import pebble.asset.func.ImageTagInclude;
-import pebble.asset.func.JavaScriptTagInclude;
+import pebble.asset.func.CSSIncludeTag;
+import pebble.asset.func.ImageIncludeTag;
+import pebble.asset.func.JavaScriptIncludeTag;
 import pebble.asset.func.RequireAssetFunction;
 import pebble.asset.impl.AssetConfig;
 
@@ -22,9 +22,9 @@ public class PebbleAssetExtension extends AbstractExtension {
     public PebbleAssetExtension(AssetConfig config) {
         functions.put("requireAsset", new RequireAssetFunction(config));
 
-        tokenParsers.add(new JavaScriptTagInclude());
-        tokenParsers.add(new CSSTagInclude());
-        tokenParsers.add(new ImageTagInclude());
+        tokenParsers.add(new JavaScriptIncludeTag(config));
+        tokenParsers.add(new CSSIncludeTag(config));
+        tokenParsers.add(new ImageIncludeTag(config));
     }
 
     @Override

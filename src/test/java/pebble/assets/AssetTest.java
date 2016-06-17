@@ -58,6 +58,16 @@ public class AssetTest {
         assertEquals(result,  "<script src=\"/assets/b.js\"></script>");
     }
 
+    @Test
+    public void testJavascriptInclude() throws PebbleException, IOException {
+        String template = "{% javascriptInclude ['one.js','two.js'] %}";
+
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+//        assertEquals(result,  "<script src=\"http://assets.example.com/assets/b.js\"></script>");
+        System.out.println(result);
+    }
+
 
     private String evaluate(String template, PebbleEngine engine) throws PebbleException, IOException {
         StringWriter writer = new StringWriter();
