@@ -1,4 +1,4 @@
-package pebble.asset.impl;
+package pebble.asset;
 
 public interface RevAssetPathResolver {
 

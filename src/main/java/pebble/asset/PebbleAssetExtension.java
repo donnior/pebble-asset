@@ -3,11 +3,10 @@ package pebble.asset;
 import com.mitchellbosecke.pebble.extension.AbstractExtension;
 import com.mitchellbosecke.pebble.extension.Function;
 import com.mitchellbosecke.pebble.tokenParser.TokenParser;
-import pebble.asset.func.CSSIncludeTag;
-import pebble.asset.func.ImageIncludeTag;
-import pebble.asset.func.JavaScriptIncludeTag;
-import pebble.asset.func.RequireAssetFunction;
-import pebble.asset.impl.AssetConfig;
+import pebble.asset.parser.CSSIncludeTagTokenParser;
+import pebble.asset.parser.ImageIncludeTagTokenParser;
+import pebble.asset.parser.JavaScriptIncludeTagTokenParser;
+import pebble.asset.func.AssetFunction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,11 +19,11 @@ public class PebbleAssetExtension extends AbstractExtension {
     private List<TokenParser> tokenParsers = new ArrayList<>();
 
     public PebbleAssetExtension(AssetConfig config) {
-        functions.put("requireAsset", new RequireAssetFunction(config));
+        functions.put("asset", new AssetFunction(config));
 
-        tokenParsers.add(new JavaScriptIncludeTag(config));
-        tokenParsers.add(new CSSIncludeTag(config));
-        tokenParsers.add(new ImageIncludeTag(config));
+        tokenParsers.add(new JavaScriptIncludeTagTokenParser(config));
+        tokenParsers.add(new CSSIncludeTagTokenParser(config));
+        tokenParsers.add(new ImageIncludeTagTokenParser(config));
     }
 
     @Override

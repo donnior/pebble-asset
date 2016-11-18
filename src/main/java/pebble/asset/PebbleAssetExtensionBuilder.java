@@ -1,6 +1,5 @@
 package pebble.asset;
 
-import pebble.asset.impl.AssetConfig;
 import pebble.asset.util.RefreshableRevMap;
 
 import java.io.File;

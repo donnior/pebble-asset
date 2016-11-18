@@ -1,4 +1,6 @@
-package pebble.asset.impl;
+package pebble.asset;
+
+import pebble.asset.RevAssetPathResolver;
 
 import java.util.HashMap;
 import java.util.Map;

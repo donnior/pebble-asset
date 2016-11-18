@@ -12,12 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AssetTest {
 
     @Test
     public void testMappedAsset() throws PebbleException, IOException {
-        String template = "<script src=\"{{requireAsset('js/a.js')}}\"></script>";
+        String template = "<script src=\"{{asset('js/a.js')}}\"></script>";
 
         PebbleEngine engine = engine("http://assets.example.com", "assets");
         String result = evaluate(template, engine);
@@ -39,7 +41,7 @@ public class AssetTest {
 
     @Test
     public void testUnMappedAsset() throws PebbleException, IOException {
-        String template = "<script src=\"{{requireAsset('b.js')}}\"></script>";
+        String template = "<script src=\"{{asset('b.js')}}\"></script>";
 
         PebbleEngine engine = engine("http://assets.example.com", "assets");
         String result = evaluate(template, engine);
@@ -59,15 +61,60 @@ public class AssetTest {
     }
 
     @Test
-    public void testJavascriptInclude() throws PebbleException, IOException {
-        String template = "{% javascriptInclude ['one.js','two.js'] %}";
+    public void testJavascriptListInclude() throws PebbleException, IOException {
+        String template = "{% javascriptInclude ['js/a.js','js/two.js'] %}";
 
         PebbleEngine engine = engine("http://assets.example.com", "assets");
         String result = evaluate(template, engine);
-//        assertEquals(result,  "<script src=\"http://assets.example.com/assets/b.js\"></script>");
+
+        String expected = "<script src='http://assets.example.com/assets/js/a.1122.js' ></script>\n" +
+                "<script src='http://assets.example.com/assets/js/two.js' ></script>\n";
+
+        assertEquals(expected, result);
         System.out.println(result);
     }
 
+    @Test
+    public void testJavascriptListIncludeWithProps() throws PebbleException, IOException {
+        String template = "{% javascriptInclude ['js/a.js','js/two.js'] props {'async':true} %}";
+
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+
+        assertFalse(result.contains("async='true'"));
+        assertTrue(result.contains("async"));
+        assertTrue(result.contains("src='http://assets.example.com/assets/js/a.1122.js'"));
+        assertTrue(result.startsWith("<script"));
+        assertTrue(result.contains("src='http://assets.example.com/assets/js/two.js'"));
+
+        System.out.println(result);
+    }
+
+    @Test
+    public void testJavascriptInclude() throws PebbleException, IOException {
+        String template = "{% javascriptInclude 'js/a.js' %}";
+
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+
+        String expected = "<script src='http://assets.example.com/assets/js/a.1122.js' ></script>";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testJavascriptIncludeWithProps() throws PebbleException, IOException {
+        String template = "{% javascriptInclude 'js/a.js' props {'type':'jsx'} %}";
+
+        PebbleEngine engine = engine("http://assets.example.com", "assets");
+        String result = evaluate(template, engine);
+
+        String expected = "<script src='http://assets.example.com/assets/js/a.1122.js' type='jsx' ></script>";
+
+        assertTrue(expected.length() == result.length());
+        assertTrue(result.contains("type='jsx'"));
+        assertTrue(result.contains("src='http://assets.example.com/assets/js/a.1122.js'"));
+        assertTrue(result.startsWith("<script"));
+    }
 
     private String evaluate(String template, PebbleEngine engine) throws PebbleException, IOException {
         StringWriter writer = new StringWriter();
