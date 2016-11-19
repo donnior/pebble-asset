@@ -20,6 +20,16 @@ public abstract class AbstractAssetTagNode extends AbstractRenderableNode {
     private final MapExpression mapExpression;
     private final RevAssetPathResolver resolver;
 
+    private static String[] booleanAttributes = new String[]{
+            "allowFullscreen","async","autofocus","autoplay",
+            "checked","compact","controls","declare","default","defaultChecked",
+            "defaultMuted","defaultSelected","defer","disabled","draggable",
+            "enabled","formNoValidate","hidden","imageSmoothingEnabled","indeterminate","isMap",
+            "loop","multiple","muted","noHref","noResize","noShade","noValidate","noWrap",
+            "open","pauseOnExit","readOnly","required","reversed",
+            "selected","spellcheck","translate","trueSpeed","typeMustMatch"
+    };
+
     public AbstractAssetTagNode(int lineNumber, Expression<?> sourcesExpression, MapExpression mapExpression, RevAssetPathResolver resolver) {
         super(lineNumber);
         this.sourcesExpression = sourcesExpression;
@@ -44,8 +54,6 @@ public abstract class AbstractAssetTagNode extends AbstractRenderableNode {
                     String.format("The asset source in an asset tag evaluated to NULL.", source),
                     getLineNumber(), pebbleTemplate.getName());
         }
-
-        preparePropsMap(map);
 
         if (source instanceof Collection) {
             Iterator i = ((Collection)source).iterator();
@@ -88,11 +96,39 @@ public abstract class AbstractAssetTagNode extends AbstractRenderableNode {
 
     public abstract String tagName();
 
-    protected void preparePropsMap(Map map) {
 
+    protected String[] booleanAttributes(){
+        return booleanAttributes;
+    }
+
+    protected boolean isBooleanAttribute(String key){
+        for (String attr : this.booleanAttributes()) {
+            if (key.equals(attr)){
+                return true;
+            }
+        }
+        return false;
     }
 
     protected void writeProp(Writer writer, String key, Object value) throws IOException {
+        if (isBooleanAttribute(key)) {
+            this.writeBooleanAttribute(writer, key, value);
+        } else {
+            this.writeNotBooleanAttribute(writer, key, value);
+        }
+    }
+
+    private void writeBooleanAttribute(Writer writer, String key, Object value) throws IOException {
+        if (isTrueValueForBooleanAttributeValue(key, value.toString())) {
+            writer.write(key);
+        }
+    }
+
+    private boolean isTrueValueForBooleanAttributeValue(String key, String value) {
+        return key.equalsIgnoreCase(value) || "true".equalsIgnoreCase(value);
+    }
+
+    private void writeNotBooleanAttribute(Writer writer, String key, Object value) throws IOException {
         writer.write(key);
         writer.write("=");
         writer.write("'");
@@ -100,3 +136,4 @@ public abstract class AbstractAssetTagNode extends AbstractRenderableNode {
         writer.write("'");
     }
 }
+

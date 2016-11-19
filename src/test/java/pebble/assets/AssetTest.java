@@ -81,6 +81,8 @@ public class AssetTest {
         PebbleEngine engine = engine("http://assets.example.com", "assets");
         String result = evaluate(template, engine);
 
+        System.out.println(result);
+
         assertFalse(result.contains("async='true'"));
         assertTrue(result.contains("async"));
         assertTrue(result.contains("src='http://assets.example.com/assets/js/a.1122.js'"));

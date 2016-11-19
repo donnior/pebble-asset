@@ -10,20 +10,12 @@ import java.io.Writer;
 
 public class JavascriptAssetTagNode extends AbstractAssetTagNode {
 
+    private static String[] minimizedAttributes = new String[]{"async"};
+
     public JavascriptAssetTagNode(int lineNumber, Expression<?> sourcesExpression, MapExpression mapExpression, RevAssetPathResolver resolver) {
         super(lineNumber, sourcesExpression, mapExpression, resolver);
     }
 
-    @Override
-    public void writeProp(Writer writer, String key, Object value) throws IOException {
-        if ("async".equals(key)) {
-            if ("true".equals(value.toString()) || true == Boolean.valueOf(value.toString())) {
-                writer.write("async");
-            }
-        } else {
-            super.writeProp(writer, key, value);
-        }
-    }
 
     @Override
     public String tagName() {
