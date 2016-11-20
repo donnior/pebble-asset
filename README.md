@@ -18,7 +18,7 @@ Currently this plugin not support generating such revision file, you may checkou
 
 First you need to setup and register this extension to Pebble engine.
 
-```
+```java
 PebbleEngine.Builder builder = new PebbleEngine.Builder();
 PebbleAssetExtensionBuilder extensionBuilder = new PebbleAssetExtensionBuilder();
 PebbleAssetExtension extension = 
@@ -52,7 +52,7 @@ may generate output as
 
 This asset support three tags : `javascriptInclude` `cssInclude` `imageInclude`
 
-```
+```ruby
 {% javascriptInclude 'js/a.js' %}
 {% cssInclude 'css/main.css' %}
 {% imageInclude 'image/a.png' %}
