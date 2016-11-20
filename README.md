@@ -38,7 +38,7 @@ After setup you can use it in your view page with the following two ways:
 
 This function just resolve one asset file's path as string value.
 
-```
+```html
 <script src="{{ asset('js/a.js') }}"></script>
 ```
 
@@ -61,7 +61,7 @@ This asset support three tags : `javascriptInclude` `cssInclude` `imageInclude`
 
 will output as
 
-```
+```html
 <script src="xxxxxxxxx/js/a.2a3b23898bef.js" ></script>
 <link src="xxxx/css/main.687bdf87.css" ></link>
 <img src="xxxx/images/a.378374abef2.png" ></img>
@@ -83,7 +83,7 @@ And all tags support custom properties, you can use it to set html element's att
 
 will output as
 
-```
+```html
 <script src="xxxxxxxxx/js/a.2a3b23898bef.js" async ></script>
 ```
 
@@ -95,7 +95,7 @@ You can use `PebbleAssetExtensionBuilder` to customize `assetsHost` and asset's`
 
 For example you can set different host for development and production environment.
 
-```
+```java
 PebbleEngine.Builder builder = new PebbleEngine.Builder();
 PebbleAssetExtensionBuilder extensionBuilder = new PebbleAssetExtensionBuilder();
 PebbleAssetExtension extension = 
@@ -110,7 +110,7 @@ builder.extension(extension)
 
 may generate 
 
-```
+```html
 <script src="http://assets.example.com/static/js/a.1fbe2ad.js" ></script>
 ```
 
