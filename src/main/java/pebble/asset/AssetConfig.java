@@ -15,7 +15,7 @@ public class AssetConfig implements RevAssetPathResolver {
         this("", basePath, assetRevMap);
     }
 
-    public AssetConfig(String assetsHost, String basePath, Map<String, String> revMap) {
+    public AssetConfig(String assetsHost, String basePath, Map revMap) {
         this.assetsHost = (assetsHost != null ? assetsHost : "");
         this.basePath = basePath;
         this.assetRevMap = (revMap != null ? revMap : new HashMap<>());
