@@ -62,12 +62,12 @@ This asset support three tags : `javascriptInclude` `cssInclude` `imageInclude`
 will output as
 
 ```html
-<script src="xxxxxxxxx/js/a.2a3b23898bef.js" ></script>
-<link src="xxxx/css/main.687bdf87.css" ></link>
-<img src="xxxx/images/a.378374abef2.png" ></img>
+<script src="http://assets.example.com/static/js/a.2a3b23898bef.js" ></script>
+<link src="http://assets.example.com/static/css/main.687bdf87.css" ></link>
+<img src="http://assets.example.com/static/images/a.378374abef2.png" ></img>
 ```
 
-### Advantage Usage
+### Extra
 
 When use tags, all tags support passing asset list, for example you can use
 
@@ -75,10 +75,19 @@ When use tags, all tags support passing asset list, for example you can use
 {% javascriptInclude ['js/a.js', 'js/b.js'] %}
 ```
 
+will output as
+
+```html
+<script src="http://assets.example.com/static/js/a.11aa22bb.js" ></script>
+<script src="http://assets.example.com/static/js/b.33cc44ee.js" ></script>
+
+```
+
+
 And all tags support custom properties, you can use it to set html element's attributes; just use `props` syntax
 
 ```
-{% javascriptInclude 'js/a.js' props {'async':'true'} %}
+{% javascriptInclude 'js/a.js' props {'async':true} %}
 ```
 
 will output as
