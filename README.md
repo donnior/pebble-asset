@@ -103,7 +103,7 @@ And this syntax also support asset list.
 For example you can set different host for development and production environment.
 
 ```java
-PebbleAssetExtensionBuilder.assetsHost("http://assets.example.com")
+PebbleAssetExtensionBuilder.assetsHost(isProd ? "http://assets.example.com" : "")
                     .basePath("static")
                     .revFile("rev-mapping.json")
                     .build();
