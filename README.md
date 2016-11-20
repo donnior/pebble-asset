@@ -89,21 +89,15 @@ will output as
 
 And this syntax also support asset list.
 
-## Configuration
-
-You can use `PebbleAssetExtensionBuilder` to customize `assetsHost` and asset's`basePath`.
+## Advanced usage
 
 For example you can set different host for development and production environment.
 
 ```java
-PebbleEngine.Builder builder = new PebbleEngine.Builder();
-PebbleAssetExtensionBuilder extensionBuilder = new PebbleAssetExtensionBuilder();
-PebbleAssetExtension extension = 
-    extensionBuilder.assetsHost("http://assets.example.com")
+PebbleAssetExtensionBuilder.assetsHost("http://assets.example.com")
                     .basePath("static")
                     .revFile("rev-mapping.json")
                     .build();
-builder.extension(extension)
 
 <script src="{{ asset('js/a.js') }}"></script>
 ```
@@ -111,6 +105,11 @@ builder.extension(extension)
 may generate 
 
 ```html
+<!-- production env -->
 <script src="http://assets.example.com/static/js/a.1fbe2ad.js" ></script>
+
+<!-- dev env -->
+<script src="/static/js/a.1fbe2ad.js" ></script>
+
 ```
 
