@@ -1,6 +1,6 @@
-Asset revision support for Pebble template.
+Asset revision resolve support for Pebble template.
 
-This plugin surpose you already have asset revision mapping file, such as
+This plugin surpose you already have asset revision mapping file such as
 
 ```json
 
@@ -10,17 +10,42 @@ This plugin surpose you already have asset revision mapping file, such as
 }
 
 ```
-
-
+Currently this plugin not support generating such revision file, you may checkout professional front-end solution such as Gulp and its pugin like https://github.com/sindresorhus/gulp-rev.
 
 ## How to use
 
-This asset plugin support two usages:
+### Setup and register this extension
 
-### use `asset` function
+First you need to setup and register this extension to Pebble engine.
+
+```
+PebbleEngine.Builder builder = new PebbleEngine.Builder();
+PebbleAssetExtensionBuilder extensionBuilder = new PebbleAssetExtensionBuilder();
+PebbleAssetExtension extension = 
+    extensionBuilder.assetsHost("http://assets.example.com")
+                    .basePath("static")
+                    .revFile("rev-mapping.json")
+                    .build();
+builder.extension(extension)
+```
+
+You can set `assetsHost`,`basePath` and `revFile`, only `revFile` is required.
+
+
+After setup you can use it in your view page with the following two ways:
+
+### Use `asset` function
+
+This function just resolve one asset file's path as string value.
 
 ```
 <script src="{{ asset('js/a.js') }}"></script>
+```
+
+may generate output as
+
+```html
+<script src="http://assets.example.com/static/js/a.11aa22bb.js" ></script>
 ```
 
 ### Use Tags
