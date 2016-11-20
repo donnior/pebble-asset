@@ -50,9 +50,9 @@ may generate output as
 
 ### Use Tags
 
-This asset support three tags : `javascriptInclude` `cssInclude` `imageInclude`
+This extension support three tags : `javascriptInclude` `cssInclude` `imageInclude`
 
-```erb
+```php
 {% javascriptInclude 'js/a.js' %}
 {% cssInclude 'css/main.css' %}
 {% imageInclude 'image/a.png' %}
@@ -71,7 +71,7 @@ will output as
 
 When use tags, all tags support passing asset list, for example you can use
 
-```
+```php
 {% javascriptInclude ['js/a.js', 'js/b.js'] %}
 ```
 
@@ -86,7 +86,7 @@ will output as
 
 And all tags support custom properties, you can use it to set html element's attributes; just use `props` syntax
 
-```
+```php
 {% javascriptInclude 'js/a.js' props {'async':true} %}
 ```
 
