@@ -1,4 +1,6 @@
 target
+build
+.gradle
 pebble-asset.ipr
 pebble-asset.iws
 pebble-asset.iml
