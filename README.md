@@ -52,7 +52,7 @@ may generate output as
 
 This asset support three tags : `javascriptInclude` `cssInclude` `imageInclude`
 
-```ruby
+```erb
 {% javascriptInclude 'js/a.js' %}
 {% cssInclude 'css/main.css' %}
 {% imageInclude 'image/a.png' %}
