@@ -1,6 +1,6 @@
-Asset revision resolve support for Pebble template.
+Pebble template extension with asset revision resolve support.
 
-This plugin surpose you already have asset revision mapping file such as
+This extension surpose you already have asset revision mapping file such as
 
 ```json
 
@@ -10,7 +10,7 @@ This plugin surpose you already have asset revision mapping file such as
 }
 
 ```
-Currently this plugin not support generating such revision file, you may checkout professional front-end solution such as Gulp and its pugin like https://github.com/sindresorhus/gulp-rev.
+Currently this extension not support generating such revision file, you may checkout professional front-end solution such as Gulp and its pugin like https://github.com/sindresorhus/gulp-rev.
 
 ## How to use
 
@@ -69,7 +69,7 @@ will output as
 
 ### Extra
 
-When use tags, all tags support passing asset list, for example you can use
+When use tags, all tags support passing assets array, for example you can use
 
 ```php
 {% javascriptInclude ['js/a.js', 'js/b.js'] %}
@@ -83,7 +83,6 @@ will output as
 
 ```
 
-
 And all tags support custom properties, you can use it to set html element's attributes; just use `props` syntax
 
 ```php
@@ -96,7 +95,11 @@ will output as
 <script src="xxxxxxxxx/js/a.2a3b23898bef.js" async ></script>
 ```
 
-And this syntax also support asset list.
+And this syntax also support assets array.
+
+```php
+{% javascriptInclude ['js/a.js', 'js/b.js'] props {'async':true} %}
+```
 
 ## Advanced usage
 
