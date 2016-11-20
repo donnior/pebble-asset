@@ -5,7 +5,7 @@ This extension surpose you already have asset revision mapping file such as
 ```json
 
 {
-  "js/a.js" : "js/a.1a2b3c4d5e6f.js",
+  "js/a.js" : "js/a.11aa22bb.js",
   "css/main.css" :  "css/main.7f8e9d0c.css"
 }
 
